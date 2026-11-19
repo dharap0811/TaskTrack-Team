@@ -1,0 +1,34 @@
+
+name: TaskTrack CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preparation:
+    name: Validate Project Preparation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          test -f README.md
+          test -f .gitignore
+          test -f k8s/app-deployment.yaml
+          test -f k8s/app-service.yaml
+          echo "Preparation files found"
+
+      - name: Explain pending integration
+        run: |
+          echo "Application tests and Docker publishing"
+          echo "will be added after application integration."
