@@ -24,14 +24,23 @@ jobs:
           test -f k8s/app-deployment.yaml
           test -f k8s/app-service.yaml
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
-
       - name: Validate Kubernetes manifests
         run: |
-          kubectl create --dry-run=client --validate=false -f k8s/app-deployment.yaml -o yaml > /dev/null
-          kubectl create --dry-run=client --validate=false -f k8s/app-service.yaml -o yaml > /dev/null
-          echo "Kubernetes manifest parsing passed"
+          python -m pip install --quiet pyyaml
+          python - <<'PY'
+          import yaml
+          from pathlib import Path
+
+          for path in Path("k8s").glob("*.yaml"):
+              with path.open(encoding="utf-8") as file:
+                  manifests = list(yaml.safe_load_all(file))
+              for manifest in manifests:
+                  assert isinstance(manifest, dict), f"Invalid document in {path}"
+                  assert "apiVersion" in manifest, f"Missing apiVersion in {path}"
+                  assert "kind" in manifest, f"Missing kind in {path}"
+                  assert "metadata" in manifest, f"Missing metadata in {path}"
+              print(f"Validated {path}")
+          PY
 
   build:
     name: Build and publish Docker image
@@ -70,3 +79,4 @@ jobs:
           context: .
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: ghcr.io/dharap0811/tasktrack-team:sha-${{ github.sha }}
+
