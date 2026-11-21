@@ -19,11 +19,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate Kubernetes files
+      - name: Check Kubernetes files
         run: |
           test -f k8s/app-deployment.yaml
           test -f k8s/app-service.yaml
-          echo "Kubernetes files found"
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Validate Kubernetes manifests
+        run: |
+          kubectl create --dry-run=client --validate=false -f k8s/app-deployment.yaml -o yaml > /dev/null
+          kubectl create --dry-run=client --validate=false -f k8s/app-service.yaml -o yaml > /dev/null
+          echo "Kubernetes manifest parsing passed"
 
   build:
     name: Build and publish Docker image
