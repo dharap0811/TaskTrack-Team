@@ -1,0 +1,14 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasktrack-service
+  namespace: tasktrack
+spec:
+  type: ClusterIP
+  selector:
+    app: tasktrack
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
