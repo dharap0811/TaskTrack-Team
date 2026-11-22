@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <title>TaskTrack | My Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/script.js" defer></script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✓</div>
+        <span>TaskTrack<span class="brand-dot">.</span></span>
+      </div>
+
+      <div class="nav-heading">WORKSPACE</div>
+      <nav>
+        <a class="nav-link active" href="/">▦ &nbsp; Dashboard</a>
+        <a class="nav-link" href="#tasks">☑ &nbsp; My Tasks</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="avatar">TT</div>
+        <div>
+          <strong>TaskTrack Team</strong>
+          <small>Personal Workspace</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <span>Workspace / Dashboard</span>
+        <span class="topbar-badge">● Personal Workspace</span>
+      </header>
+
+      <div class="content">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">YOUR PRODUCTIVITY SPACE</div>
+            <h1>My Dashboard <span>✦</span></h1>
+            <p>Stay organized and make progress, one task at a time.</p>
+          </div>
+          <div class="date-label" id="today"></div>
+        </div>
+
+        <section class="stats">
+          <div class="stat-card">
+            <div class="stat-label">Total Tasks <span>▤</span></div>
+            <div class="stat-value" id="total">0</div>
+            <div class="stat-footer">All your tasks in one place</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Completed <span>✓</span></div>
+            <div class="stat-value" id="completed">0</div>
+            <div class="stat-footer">Tasks you've finished</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">In Progress <span>◷</span></div>
+            <div class="stat-value" id="pending">0</div>
+            <div class="stat-footer">Keep up the momentum</div>
+          </div>
+        </section>
+
+        <section class="task-panel" id="tasks">
+          <div class="panel-heading">
+            <div>
+              <h2>My Tasks</h2>
+              <p>Manage your daily priorities.</p>
+            </div>
+            <span class="task-count" id="task-count">0 tasks</span>
+          </div>
+
+          <form id="task-form" class="task-form">
+            <input
+              id="task-input"
+              type="text"
+              placeholder="What do you need to get done?"
+              maxlength="200"
+              required
+              aria-label="New task title"
+            >
+            <button type="submit">+ Add Task</button>
+          </form>
+
+          <div class="filter-row">
+            <button class="filter active" data-filter="all">All Tasks</button>
+            <button class="filter" data-filter="pending">Pending</button>
+            <button class="filter" data-filter="completed">Completed</button>
+          </div>
+
+          <div id="message" role="status" aria-live="polite"></div>
+          <div id="task-list" class="task-list"></div>
+        </section>
+
+        <footer>TaskTrack Team · IT 390 Final Project</footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
