@@ -1,0 +1,32 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasktrack
+  namespace: tasktrack
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tasktrack
+  template:
+    metadata:
+      labels:
+        app: tasktrack
+    spec:
+      containers:
+        - name: tasktrack
+          image: ghcr.io/dharap0811/tasktrack-team:REPLACE_WITH_SHA_TAG
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: REDIS_URL
+              value: "redis://redis:6379/0"
+            - name: APP_TITLE
+              value: "TaskTrack Team"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
