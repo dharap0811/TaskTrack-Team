@@ -1,5 +1,4 @@
-
-apiVersion: apps/v1
+﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tasktrack
@@ -21,6 +20,8 @@ spec:
           ports:
             - containerPort: 8000
           env:
+            - name: REDIS_URL
+              value: "redis://redis:6379/0"
             - name: APP_TITLE
               value: "TaskTrack Team"
           readinessProbe:
