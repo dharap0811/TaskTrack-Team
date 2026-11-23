@@ -96,3 +96,11 @@ def test_homepage():
 
     assert response.status_code == 200
     assert "TaskTrack" in response.text
+
+def test_app_config():
+    client = TestClient(app)
+
+    response = client.get("/config")
+
+    assert response.status_code == 200
+    assert response.json() == {"app_title": "TaskTrack Team"}

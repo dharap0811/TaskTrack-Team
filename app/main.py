@@ -9,9 +9,10 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-app = FastAPI(title="TaskTrack Team")
-
+APP_TITLE = os.getenv("APP_TITLE", "TaskTrack Team")
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+
+app = FastAPI(title=APP_TITLE)
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
@@ -34,6 +35,10 @@ class Task(BaseModel):
 @app.get("/", include_in_schema=False)
 def home():
     return FileResponse(STATIC_DIR / "index.html")
+
+@app.get("/config")
+def config():
+    return {"app_title": APP_TITLE}
 
 
 @app.get("/health")
