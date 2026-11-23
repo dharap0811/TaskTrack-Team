@@ -12,3 +12,43 @@ Test application: nginx-demo
 
 Note: These tests used a temporary Nginx deployment.
 The actual TaskTrack application still requires deployment testing.
+
+--------------------------------------------------
+TaskTrack Application Kubernetes Test
+Date: 11/22/2026
+--------------------------------------------------
+
+Test application: TaskTrack (FastAPI + Redis)
+
+1. Application deployment: PASSED
+   - TaskTrack application pods running.
+   - Redis pod running.
+   - Kubernetes Service connected to both application pods.
+
+2. Application health check: PASSED
+   - GET /health returned healthy.
+
+3. Scaling from 2 to 3 replicas: PASSED
+   - All three TaskTrack pods reached 1/1 Running.
+
+4. Automatic pod replacement: PASSED
+   - Deleted one TaskTrack pod.
+   - Kubernetes automatically created a replacement.
+   - Three healthy TaskTrack pods restored.
+
+5. Rolling update: PASSED
+   - Updated APP_TITLE to "TaskTrack Final Demo".
+   - Kubernetes created three new application pods.
+   - New pods reached 1/1 Running.
+
+6. Rollback: PASSED
+   - Ran kubectl rollout undo.
+   - Original APP_TITLE restored to "TaskTrack Team".
+   - Three original-configuration pods reached 1/1 Running.
+
+7. Docker image verification: PASSED
+   - Image:
+     ghcr.io/dharap0811/tasktrack-team:sha-bd83ae1dbf4f5186385695248193520009bf81af
+
+Note: The rolling update tested an environment variable
+change, not a new application image.
