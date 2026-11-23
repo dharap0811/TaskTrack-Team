@@ -140,3 +140,24 @@ document.querySelectorAll(".filter").forEach(button => {
 });
 
 loadTasks();
+
+async function loadAppTitle() {
+  try {
+    const response = await fetch("/config");
+
+    if (!response.ok) {
+      throw new Error("Unable to load application configuration");
+    }
+
+    const config = await response.json();
+    const titleElement = document.getElementById("app-title");
+
+    if (titleElement) {
+      titleElement.textContent = config.app_title;
+    }
+  } catch (error) {
+    console.error("Could not load application title:", error);
+  }
+}
+
+loadAppTitle();
