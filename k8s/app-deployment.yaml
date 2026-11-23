@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: tasktrack
-          image: ghcr.io/dharap0811/tasktrack-team:REPLACE_WITH_SHA_TAG
+          image: ghcr.io/dharap0811/tasktrack-team:sha-467f8e248c9ebb04ff7382a8f1a56c5ceb229d1d
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
